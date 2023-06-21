@@ -1,6 +1,6 @@
 
 
-public class b_SudokuSolver {
+public class SudokuSolver {
     final int MAX_SIZE = 9;
     char[][] board = {
         {'5','3','.','.','7','.','.','.','.'},
@@ -30,28 +30,31 @@ public class b_SudokuSolver {
 
         // if cell is not empty then increment col by 1
         if(board[row][col] != '.') {
-            solver(row, col + 1);
+            return solver(row, col + 1);
         }
 
-        // if a cell is empty then we have to put a digits from 1 to 9
-        // but we also have to check that it's a safe cell to place a digit
-        // so we will check for current row, current col and current grid
-        for(int i = 1; i <= MAX_SIZE; i++) {
-            char num = (char) (i + '0');
-            if(isSafe(row, col, num)) {
-                // now if it's safe to place a digit then
-                board[row][col] = num;
-                // System.out.println("Filled : " + board[row][col]);
-                print();
-                System.out.println("===============");
-                boolean result = solver(row, col + 1);
-                if(result) {
-                    return true;
+        else {
+            // if a cell is empty then we have to put a digits from 1 to 9
+            // but we also have to check that it's a safe cell to place a digit
+            // so we will check for current row, current col and current grid
+            for(int i = 1; i <= MAX_SIZE; i++) {
+                char num = (char) (i + '0');
+                if(isSafe(row, col, num)) {
+                    // now if it's safe to place a digit then
+                    board[row][col] = num;
+                    // System.out.println("Filled : " + board[row][col]);
+                    boolean result = solver(row, col + 1);
+                    if(result) {
+                        print();
+                        return true;
+                    }
+                    // Now do backtracking
+                    board[row][col] = '.';
                 }
-                // Now do backtracking
-                board[row][col] = '.';
             }
         }
+
+        
         return false;
     }
 
@@ -103,7 +106,7 @@ public class b_SudokuSolver {
     //     solver(0, 0);
     // }
     public static void main(String[] args) {
-        b_SudokuSolver obj = new b_SudokuSolver();
+        SudokuSolver obj = new SudokuSolver();
         obj.solver(0, 0);
         
     }
